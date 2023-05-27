@@ -41,6 +41,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=(("draft", "Draft"), ("published", "Published")), default="published")
     objects = models.Manager()
     postobjects = PostObjects()
+    thumbnail = models.ImageField(upload_to="images", null=True)
     
     class Meta:
         ordering = ("-published",)

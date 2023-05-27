@@ -1,4 +1,5 @@
 from datetime import timedelta
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,10 +31,11 @@ INSTALLED_APPS = [
     "blog",
     "blog_api",
     "rest_framework",
-    "drf_yasg",
     "rest_framework_simplejwt",
     'django_filters',
-    "accounts"
+    "accounts",
+    "drf_spectacular",
+    "faker"
 ]
 
 MIDDLEWARE = [
@@ -113,7 +115,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "images/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'images'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -125,7 +132,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.CustomPagination',
+    'PAGE_SIZE': 10
 }
 
 SIMPLE_JWT = {
@@ -156,7 +167,9 @@ SIMPLE_JWT = {
 
 CORS_ALLOW_ALL_ORIGINS = True 
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'core.pagination.CustomPagination',
-    'PAGE_SIZE': 10
-} 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Practise Blog API',
+    'DESCRIPTION': 'API for Practise Blog',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
