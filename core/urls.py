@@ -5,6 +5,7 @@ from rest_framework import permissions
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import WellKnownApi
 
 urlpatterns = [
    # Swagger
@@ -15,6 +16,7 @@ urlpatterns = [
     # Routes
     path('api/accounts/', include('accounts.urls')),
     path("admin/", admin.site.urls),
+    path(".well-known/ai-plugin.json", WellKnownApi.as_view(), name="well-known"),
     path("", include("blog.urls")),
 
 ]

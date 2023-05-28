@@ -5,6 +5,6 @@ urlpatterns = [
     path("login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path('register/', RegisterAPI.as_view(), name='register'),
-    path('profile/<int:pk>', ProfileAPI.as_view(), name='profile'),
+    path('profile/<int:pk>', ProfileAPI.as_view(), name='profile_by_id'),
     path('profile/', UserProfileAPI.as_view(), name='profile'),
 ]
